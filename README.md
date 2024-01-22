@@ -16,6 +16,20 @@
 
 欢迎大家品尝&反馈！
 
+## 如何安装
+
+这样
+
+![Code - Donload Zip](/screenshots/github-download-zip.png)
+
+然后这样
+
+![将内部文件夹复制 - 粘贴到找得到的位置](/screenshots/extract-to-documents.png)
+
+最后这样
+
+![在 Chromium 系浏览器打开开发者模式 - 加载解压缩的扩展](/screenshots/chrome-load-unpacked.png)
+
 ## 乱七八糟の交流群
 
 若您在使用该扩展程序时遇到问题，可添加 QQ 群 [933189780] ~~与我激情对线~~ 交流。
