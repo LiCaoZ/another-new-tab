@@ -1,5 +1,6 @@
 {
     "manifest_version": 3,
+    "default_locale": "zh_CN",
     "name": "Another New Tab",
     "version": "0.0.1",
     "description": "A new tab with quotes and poems",
