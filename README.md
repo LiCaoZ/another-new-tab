@@ -8,11 +8,17 @@
 
 ## 目前实现了……
 
-[x] 跟随系统主题色自动深色模式 ![深色模式功能截图](/screenshots/dark-mode.png)
+[x] 跟随系统主题色自动深色模式
 
-[x] 在线拉取 [今日诗词](https://www.jinrishici.com) API ![今日诗词](/screenshots/jinrishici.png)
+![深色模式功能截图](/screenshots/dark-mode.png)
 
-[x] 在网络不佳无法拉取在线内容时从本地候补内容中选取呈现 ![离线内容](/screenshots/offline.png)
+[x] 在线拉取 [今日诗词](https://www.jinrishici.com) API
+
+![今日诗词](/screenshots/jinrishici.png)
+
+[x] 在网络不佳无法拉取在线内容时从本地候补内容中选取呈现
+
+![离线内容](/screenshots/offline.png)
 
 欢迎大家品尝&反馈！
 
