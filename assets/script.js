@@ -91,17 +91,21 @@ const jrsc = () => {
 
 // 一言逻辑
 const hitokoto = () => {
-    fetch("https://v1.hitokoto.cn/?encode=json&" + Math.random())
-        .then((response) => response.json())
-        .then((data) => {
+    var xhr = new XMLHttpRequest();
+    xhr.open('get', 'https://v1.hitokoto.cn/?encode=json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            const data = JSON.parse(xhr.responseText);
             document.querySelector('.quote-text').innerText = data.hitokoto;
             document.querySelector('.title-text').innerText = '';
             document.querySelector('.author-text').innerText = '—— ' + data.from;
-        })
-        .catch(
-            console.error('Request failed. Network error.'),
-            fallback()
-        );
+        }
+    }
+    xhr.send();
+    xhr.onerror = function () {
+        fallback();
+        console.error('Request failed. Network error.');
+    }
 }
 
 if (contentOption == null) {
