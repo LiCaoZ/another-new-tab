@@ -64,6 +64,7 @@ const fallback = () => {
     document.querySelector('.quote-text').innerText = fallbackQuotes[randomSeed]['text'];
     document.querySelector('.title-text').innerText = '无法获取在线内容，请检查网络连接状态与控制台报错';
     document.querySelector('.author-text').innerText = '—— ' + fallbackQuotes[randomSeed]['author'];
+    document.querySelector('.vendor-text').innerText = '本地数据集';
 }
 
 // 抽象出今日诗词逻辑
@@ -85,6 +86,7 @@ const jrsc = () => {
         document.querySelector('.quote-text').innerText = result.data.content;
         document.querySelector('.title-text').innerText = '';
         document.querySelector('.author-text').innerText = '—— ' + result.data.origin.author + '《' + result.data.origin.title + '》';
+        document.querySelector('.vendor-text').innerHTML = '<a href="https://www.jinrishici.com/" target="_blank">今日诗词</a>';
         console.log(result)
     });
 }
@@ -99,6 +101,7 @@ const hitokoto = () => {
             document.querySelector('.quote-text').innerText = data.hitokoto;
             document.querySelector('.title-text').innerText = '';
             document.querySelector('.author-text').innerText = '—— ' + data.from;
+            document.querySelector('.vendor-text').innerHTML = '<a href="https://hitokoto.cn/" target="_blank">一言</a>';
         }
     }
     xhr.send();

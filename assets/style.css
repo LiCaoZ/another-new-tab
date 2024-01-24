@@ -54,3 +54,29 @@ body {
         color: #969696;
     }
 }
+
+/* Credit: https://github.com/nexmoe/hitokoto-newtab/blob/main/style.css */
+
+footer {
+	opacity: 0.5;
+	padding-top: 0.5rem;
+	position: absolute;
+	right: 15px;
+	bottom: 15px;
+	text-align: right;
+	font-family: "Avenir", "helvetica neue", helvetica, arial, "Microsoft YaHei", "PingFang SC", "Heiti SC", sans-serif;
+	font-weight: 500;
+	font-size: 11px;
+	color: #aeaeae;
+	line-height: 16px;
+}
+
+footer:hover {
+	opacity: 1;
+}
+
+footer a {
+	color: #969696;
+	text-decoration: none;
+	font-weight: bold;
+}
