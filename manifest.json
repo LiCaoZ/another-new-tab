@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Another New Tab",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "A new tab with quotes and poems",
     "chrome_url_overrides": {
         "newtab": "index.html"
