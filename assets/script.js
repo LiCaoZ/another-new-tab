@@ -1,12 +1,19 @@
-// 取配置项
-const getlSItem = (key) => {
-    return localStorage.getItem(key);
+let contentOption = localStorage.getItem('contentOption');
+let jrscToken = localStorage.getItem('jrscToken');
+
+const output = (quoteText, titleText, authorText, vendorName, vendorUrl) => {
+    document.querySelector('.quote-text').innerText = quoteText;
+    document.querySelector('.title-text').innerText = titleText;
+    document.querySelector('.author-text').innerText = authorText;
+    if (vendorUrl != "local") {
+        document.querySelector('.vendor-text').innerHTML = "<a href='" + vendorUrl + "' target='_blank'>" + vendorName + "</a>";
+    } else {
+        document.querySelector('.vendor-text').innerText = vendorName;
+    }
+    document.querySelector('.openNum').innerText = localStorage.getItem('openNum');
 }
 
-let contentOption = getlSItem('contentOption');
-let jrscToken = getlSItem('jrscToken');
-
-getlSItem('openNum') == null ? localStorage.setItem('openNum', 1) : localStorage.setItem('openNum', parseInt(getlSItem('openNum')) + 1);
+localStorage.getItem('openNum') == null ? localStorage.setItem('openNum', 1) : localStorage.setItem('openNum', parseInt(localStorage.getItem('openNum')) + 1);
 
 // 无网/无法获取 fallback
 const fallback = () => {
@@ -61,10 +68,7 @@ const fallback = () => {
         }
     ];
     let randomSeed = Math.floor(Math.random() * fallbackQuotes.length);
-    document.querySelector('.quote-text').innerText = fallbackQuotes[randomSeed]['text'];
-    document.querySelector('.title-text').innerText = '无法获取在线内容，请检查网络连接状态与控制台报错';
-    document.querySelector('.author-text').innerText = '—— ' + fallbackQuotes[randomSeed]['author'];
-    document.querySelector('.vendor-text').innerText = '本地数据集';
+    output(fallbackQuotes[randomSeed]['text'], '无法获取在线内容，请检查网络连接状态与控制台报错', '—— ' + fallbackQuotes[randomSeed]['author'], '本地数据集', 'local');
 }
 
 // 抽象出今日诗词逻辑
@@ -83,10 +87,7 @@ const jrsc = () => {
     }(window);
 
     jinrishici.load(function (result) {
-        document.querySelector('.quote-text').innerText = result.data.content;
-        document.querySelector('.title-text').innerText = '';
-        document.querySelector('.author-text').innerText = '—— ' + result.data.origin.author + '《' + result.data.origin.title + '》';
-        document.querySelector('.vendor-text').innerHTML = '<a href="https://www.jinrishici.com/" target="_blank">今日诗词</a>';
+        output(result.data.content, '', '—— ' + result.data.origin.author + '《' + result.data.origin.title + '》', '今日诗词', 'https://www.jinrishici.com/')
         console.log(result)
     });
 }
@@ -98,10 +99,8 @@ const hitokoto = () => {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             const data = JSON.parse(xhr.responseText);
-            document.querySelector('.quote-text').innerText = data.hitokoto;
-            document.querySelector('.title-text').innerText = '';
-            document.querySelector('.author-text').innerText = '—— ' + data.from;
-            document.querySelector('.vendor-text').innerHTML = '<a href="https://hitokoto.cn/" target="_blank">一言</a>';
+            output(data.hitokoto, '', data.from, '一言', 'https://hitokoto.cn/')
+            console.log(data)
         }
     }
     xhr.send();
