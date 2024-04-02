@@ -70,8 +70,6 @@ const local = (isOffline) => {
     if (isOffline) {
         output(localQuotes[randomSeed]['text'], '无法获取在线内容，请检查网络连接状态与控制台报错', '—— ' + localQuotes[randomSeed]['author'], '本地数据集', 'local');
     } else {
-        // for debug
-        console.log(localQuotes[randomSeed]['text'])
         output(localQuotes[randomSeed]['text'], '', '—— ' + localQuotes[randomSeed]['author'], '本地数据集', 'local');
     }
 }
@@ -124,5 +122,8 @@ if (option == 0) {
 } else if (option == 1) {
     hitokoto();
 } else {
-    local();
+    // wait for dom ready
+    document.addEventListener('DOMContentLoaded', function () {
+        local();
+    });
 }
