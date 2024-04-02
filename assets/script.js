@@ -1,6 +1,10 @@
 let jrscToken = localStorage.getItem('jrscToken');
 
 const output = (quoteText, titleText, authorText, vendorName, vendorUrl) => {
+    // Get localized strings by chrome.i18n
+    document.querySelector('.data-provider-description').innerText = chrome.i18n.getMessage('dataProviderDescription');
+    document.querySelector('.open-num-description').innerHTML = chrome.i18n.getMessage('openNumDescription');
+    vendorName = chrome.i18n.getMessage(vendorName) || vendorName;
     document.querySelector('.quote-text').innerText = quoteText;
     document.querySelector('.title-text').innerText = titleText;
     document.querySelector('.author-text').innerText = authorText;
@@ -68,9 +72,9 @@ const local = (isOffline) => {
     ];
     let randomSeed = Math.floor(Math.random() * localQuotes.length);
     if (isOffline) {
-        output(localQuotes[randomSeed]['text'], '无法获取在线内容，请检查网络连接状态与控制台报错', '—— ' + localQuotes[randomSeed]['author'], '本地数据集', 'local');
+        output(localQuotes[randomSeed]['text'], '无法获取在线内容，请检查网络连接状态与控制台报错', '—— ' + localQuotes[randomSeed]['author'], 'localDataSetName', 'local');
     } else {
-        output(localQuotes[randomSeed]['text'], '', '—— ' + localQuotes[randomSeed]['author'], '本地数据集', 'local');
+        output(localQuotes[randomSeed]['text'], '', '—— ' + localQuotes[randomSeed]['author'], 'localDataSetName', 'local');
     }
 }
 
@@ -90,7 +94,7 @@ const jrsc = () => {
     }(window);
 
     jinrishici.load(function (result) {
-        output(result.data.content, '', '—— ' + result.data.origin.author + '《' + result.data.origin.title + '》', '今日诗词', 'https://www.jinrishici.com/')
+        output(result.data.content, '', '—— ' + result.data.origin.author + '《' + result.data.origin.title + '》', 'JrscName', 'https://www.jinrishici.com/')
         console.log(result)
     });
 }
@@ -102,7 +106,7 @@ const hitokoto = () => {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             const data = JSON.parse(xhr.responseText);
-            output(data.hitokoto, '', '—— ' + data.from, '一言', 'https://hitokoto.cn/')
+            output(data.hitokoto, '', '—— ' + data.from, 'HitokotoName', 'https://hitokoto.cn/')
             console.log(data)
         }
     }

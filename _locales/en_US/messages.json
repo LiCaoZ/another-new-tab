@@ -1,0 +1,25 @@
+{
+    "extensionName": {
+        "message": "Another New Tab",
+        "description": "The name of the extension"
+    },
+    "extensionDescription": {
+        "message": "A simple new tab extension that powereded by imspiring poets and sayings.",
+        "description": "The description of the extension"
+    },
+    "dataProviderDescription": {
+        "message": "Data from"
+    },
+    "openNumDescription": {
+        "message": "Meet you the <span class='openNum'></span> time."
+    },
+    "JrscName": {
+        "message": "Jinrishici"
+    },
+    "HitokotoName": {
+        "message": "Hitokoto"
+    },
+    "localDataSetName": {
+        "message": "Local Data Set"
+    }
+}

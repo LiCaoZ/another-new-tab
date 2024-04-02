@@ -1,0 +1,25 @@
+{
+    "extensionName": {
+        "message": "另一个新标签页",
+        "description": "The name of the extension"
+    },
+    "extensionDescription": {
+        "message": "一个简单的新标签页扩展，由今日诗词和一言加持。",
+        "description": "The description of the extension"
+    },
+    "dataProviderDescription": {
+        "message": "数据源 由"
+    },
+    "openNumDescription": {
+        "message": "第 <span class='openNum'></span> 次和你相遇"
+    },
+    "JrscName": {
+        "message": "今日诗词"
+    },
+    "HitokotoName": {
+        "message": "一言"
+    },
+    "localDataSetName": {
+        "message": "本地数据集"
+    }
+}
