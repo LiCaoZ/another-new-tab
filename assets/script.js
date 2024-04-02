@@ -1,4 +1,3 @@
-let contentOption = localStorage.getItem('contentOption');
 let jrscToken = localStorage.getItem('jrscToken');
 
 const output = (quoteText, titleText, authorText, vendorName, vendorUrl) => {
@@ -15,9 +14,9 @@ const output = (quoteText, titleText, authorText, vendorName, vendorUrl) => {
 
 localStorage.getItem('openNum') == null ? localStorage.setItem('openNum', 1) : localStorage.setItem('openNum', parseInt(localStorage.getItem('openNum')) + 1);
 
-// 无网/无法获取 fallback
-const fallback = () => {
-    let fallbackQuotes = [
+// 无网/无法获取 local
+const local = (isOffline) => {
+    let localQuotes = [
         {
             text: '原神是检验原神的唯一标准。',
             author: '中国科学技术大学第十届信息安全大赛选手群'
@@ -67,8 +66,14 @@ const fallback = () => {
             author: '鲁迅《且介亭杂文末集·这也是生活》'
         }
     ];
-    let randomSeed = Math.floor(Math.random() * fallbackQuotes.length);
-    output(fallbackQuotes[randomSeed]['text'], '无法获取在线内容，请检查网络连接状态与控制台报错', '—— ' + fallbackQuotes[randomSeed]['author'], '本地数据集', 'local');
+    let randomSeed = Math.floor(Math.random() * localQuotes.length);
+    if (isOffline) {
+        output(localQuotes[randomSeed]['text'], '无法获取在线内容，请检查网络连接状态与控制台报错', '—— ' + localQuotes[randomSeed]['author'], '本地数据集', 'local');
+    } else {
+        // for debug
+        console.log(localQuotes[randomSeed]['text'])
+        output(localQuotes[randomSeed]['text'], '', '—— ' + localQuotes[randomSeed]['author'], '本地数据集', 'local');
+    }
 }
 
 // 抽象出今日诗词逻辑
@@ -80,7 +85,7 @@ const jrsc = () => {
     !function (e) {
         var n, t = {}, o = "jinrishici-token"; function i() { return document.getElementById("jinrishici-sentence") || 0 != document.getElementsByClassName("jinrishici-sentence").length } function c() { t.load(function (e) { var n = document.getElementById("jinrishici-sentence"), t = document.getElementsByClassName("jinrishici-sentence"); if (n && (n.innerText = e.data.content), 0 !== t.length) for (var o = 0; o < t.length; o++)t[o].innerText = e.data.content }) } function r(e, n) {
             var t = new XMLHttpRequest; t.open("get", n), t.withCredentials = !0, t.send(), t.onerror = function () {
-                fallback();
+                local(isOffline = true);
                 console.error('Request failed. Network error.');
             }, t.onreadystatechange = function (n) { if (4 === t.readyState) { var o = JSON.parse(t.responseText); "success" === o.status ? e(o) : console.error("今日诗词API加载失败，错误原因：" + o.errMessage) } }
         } t.load = function (n) { return e.localStorage && e.localStorage.getItem(o) ? function (e, n) { return r(e, "https://v2.jinrishici.com/one.json?client=browser-sdk/1.2&X-User-Token=" + encodeURIComponent(n)) }(n, e.localStorage.getItem(o)) : function (n) { return r(function (t) { e.localStorage.setItem(o, t.token), n(t) }, "https://v2.jinrishici.com/one.json?client=browser-sdk/1.2") }(n) }, e.jinrishici = t, i() ? c() : (n = function () { i() && c() }, "loading" != document.readyState ? n() : document.addEventListener ? document.addEventListener("DOMContentLoaded", n) : document.attachEvent("onreadystatechange", function () { "complete" == document.readyState && n() }))
@@ -105,20 +110,19 @@ const hitokoto = () => {
     }
     xhr.send();
     xhr.onerror = function () {
-        fallback();
+        local(isOffline = true);
         console.error('Request failed. Network error.');
     }
 }
 
-if (contentOption == null) {
-    localStorage.setItem('contentOption', 'jrsc');
+// Roll a provider to trigger
+const providers = ['jrsc', 'hitokoto', 'local'];
+let option = Math.floor(Math.random() * providers.length);
+// trigger
+if (option == 0) {
     jrsc();
+} else if (option == 1) {
+    hitokoto();
 } else {
-    if (contentOption == 'jrsc') {
-        jrsc();
-    } else if (contentOption == 'hitokoto') {
-        hitokoto();
-    } else {
-        fallback();
-    }
+    local();
 }
