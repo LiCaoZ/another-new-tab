@@ -6,10 +6,6 @@
     "chrome_url_overrides": {
         "newtab": "index.html"
     },
-    "options_ui": {
-        "page": "options.html",
-        "open_in_tab": true
-    },
     "host_permissions": [
         "https://v2.jinrishici.com/",
         "https://v1.hitokoto.cn/"
