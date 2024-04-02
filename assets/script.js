@@ -102,7 +102,7 @@ const hitokoto = () => {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             const data = JSON.parse(xhr.responseText);
-            output(data.hitokoto, '', data.from, '一言', 'https://hitokoto.cn/')
+            output(data.hitokoto, '', '—— ' + data.from, '一言', 'https://hitokoto.cn/')
             console.log(data)
         }
     }
