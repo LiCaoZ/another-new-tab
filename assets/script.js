@@ -23,11 +23,11 @@ const local = (isOffline) => {
         },
         {
             text: '「原神」是世界上坠吼的游戏。',
-            author: '洛川泽'
+            author: 'LCZ'
         },
         {
             text: '不玩原神的话，你将会度过相对失败的一生。',
-            author: '洛川泽'
+            author: 'LCZ'
         },
         {
             text: '加入原神大学，共创辉煌人生！',
