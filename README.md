@@ -2,6 +2,8 @@
 
 [今日诗词](https://www.jinrishici.com/) 与 [一言](https://hitokoto.cn/) 加持的新标签页。
 
+你现在可以在 [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/another-new-tab/lcfiiahoonongfokddbmkmpjajnanplf) 安装该扩展程序。
+
 ---
 
 其实是因为我之前用过 [Nexmoe 佬的 hitokoto-newtab 项目](https://github.com/nexmoe/hitokoto-newtab)，一直希望做一个今日诗词的实现，所以终于有精力抽时间赶工完成了本项目。它可能包含一些非常低级 ~~弱智~~ 的功能实现，欢迎您就此提交 PR 来改善它。
@@ -29,10 +31,6 @@
 最后这样
 
 ![在 Chromium 系浏览器打开开发者模式 - 加载解压缩的扩展](/screenshots/chrome-load-unpacked.png)
-
-## 乱七八糟の交流群
-
-若您在使用该扩展程序时遇到问题，可添加 QQ 群 [933189780] ~~与我激情对线~~ 交流。
 
 ------
 
