@@ -19,18 +19,20 @@ function updateHtmlLang() {
 }
 
 let jrscToken;
+let openNum;
 
-// Initialize and handle storage
 chrome.storage.sync.get(['jrscToken', 'openNum'], function (result) {
     // Update HTML lang attribute and page title
     updateHtmlLang();
 
     jrscToken = result.jrscToken;
     let currentOpenNum = result.openNum || 0;
+    // 将 openNum 赋值给全局变量
+    openNum = currentOpenNum + 1;
 
     // Update open count
     chrome.storage.sync.set({
-        'openNum': currentOpenNum + 1
+        'openNum': openNum
     });
 });
 
@@ -47,11 +49,13 @@ const output = (quoteText, titleText, authorText, vendorName, vendorUrl) => {
     } else {
         document.querySelector('.vendor-text').innerText = vendorName;
     }
-
-    // Get open count from sync storage
-    chrome.storage.sync.get(['openNum'], function (result) {
-        document.querySelector('.openNum').innerText = result.openNum || 0;
-    });
+    if (openNum === 1) {
+        document.querySelector('.open-num-description').innerText = chrome.i18n.getMessage('firstViewMessage');
+    } else {
+        chrome.storage.sync.get(['openNum'], function (result) {
+            document.querySelector('.openNum').innerText = result.openNum || 0;
+        });
+    }
 }
 
 // 无网/无法获取 local
