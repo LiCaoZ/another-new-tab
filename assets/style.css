@@ -13,7 +13,7 @@ body {
     align-items: center;
     display: flex;
     flex-direction: column;
-    font-family: "Avenir", "helvetica neue", helvetica, arial, "Microsoft YaHei", "PingFang SC", "Heiti SC", sans-serif;
+    font-family: "Segoe UI", "Avenir", "helvetica neue", helvetica, arial, "Microsoft YaHei UI", "PingFang SC", "Heiti SC", sans-serif;
     font-weight: 500;
     justify-content: center;
 }

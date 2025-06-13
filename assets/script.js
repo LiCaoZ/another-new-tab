@@ -3,17 +3,17 @@ function updateHtmlLang() {
     // Get current locale from Chrome or default to en-US
     const locale = chrome.i18n.getUILanguage();
     let lang = 'en';
-    
+
     // Map Chrome locale format to HTML lang attribute format
     if (locale.startsWith('zh')) {
         lang = 'zh';
     } else if (locale.startsWith('en')) {
         lang = 'en';
     }
-    
+
     // Set the HTML lang attribute
     document.documentElement.setAttribute('lang', lang);
-    
+
     // Set the page title to the localized extension name
     document.title = chrome.i18n.getMessage('extensionName');
 }
@@ -21,13 +21,13 @@ function updateHtmlLang() {
 let jrscToken;
 
 // Initialize and handle storage
-chrome.storage.sync.get(['jrscToken', 'openNum'], function(result) {
+chrome.storage.sync.get(['jrscToken', 'openNum'], function (result) {
     // Update HTML lang attribute and page title
     updateHtmlLang();
-    
+
     jrscToken = result.jrscToken;
     let currentOpenNum = result.openNum || 0;
-    
+
     // Update open count
     chrome.storage.sync.set({
         'openNum': currentOpenNum + 1
@@ -47,9 +47,9 @@ const output = (quoteText, titleText, authorText, vendorName, vendorUrl) => {
     } else {
         document.querySelector('.vendor-text').innerText = vendorName;
     }
-    
+
     // Get open count from sync storage
-    chrome.storage.sync.get(['openNum'], function(result) {
+    chrome.storage.sync.get(['openNum'], function (result) {
         document.querySelector('.openNum').innerText = result.openNum || 0;
     });
 }
@@ -94,13 +94,13 @@ const jrsc = () => {
                 local(isOffline = true);
                 console.error('Request failed. Network error.');
             }, t.onreadystatechange = function (n) { if (4 === t.readyState) { var o = JSON.parse(t.responseText); "success" === o.status ? e(o) : console.error("今日诗词API加载失败，错误原因：" + o.errMessage) } }
-        } t.load = function (n) { 
-            return chrome.storage.sync.get(['jrscToken'], function(result) {
+        } t.load = function (n) {
+            return chrome.storage.sync.get(['jrscToken'], function (result) {
                 if (result.jrscToken) {
                     return r(n, "https://v2.jinrishici.com/one.json?client=browser-sdk/1.2&X-User-Token=" + encodeURIComponent(result.jrscToken));
                 } else {
                     return r(function (t) {
-                        chrome.storage.sync.set({jrscToken: t.token});
+                        chrome.storage.sync.set({ jrscToken: t.token });
                         n(t);
                     }, "https://v2.jinrishici.com/one.json?client=browser-sdk/1.2");
                 }
@@ -121,7 +121,11 @@ const hitokoto = () => {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             const data = JSON.parse(xhr.responseText);
-            output(data.hitokoto, '', '—— ' + data.from, 'HitokotoName', 'https://hitokoto.cn/')
+
+            data.from_who
+                ? output(data.hitokoto, '', '—— ' + data.from_who + ' [' + data.from + ']', 'HitokotoName', 'https://hitokoto.cn/')
+                : output(data.hitokoto, '', '—— ' + data.from, 'HitokotoName', 'https://hitokoto.cn/');
+
             console.log(data)
         }
     }
@@ -137,13 +141,13 @@ chrome.storage.sync.get(['dataSource'], function (result) {
     // Define available providers
     const providers = ['jrsc', 'hitokoto', 'local', 'random'];
     let selectedSource = result.dataSource || 'random';
-    
+
     // If random is selected, pick one randomly
     if (selectedSource === 'random') {
         const randomProviders = ['jrsc', 'hitokoto', 'local'];
         selectedSource = randomProviders[Math.floor(Math.random() * randomProviders.length)];
     }
-    
+
     // Trigger the selected provider
     if (selectedSource === 'jrsc') {
         jrsc();
@@ -162,6 +166,6 @@ chrome.storage.sync.get(['dataSource'], function (result) {
 });
 
 // Ensure title is set when DOM is fully loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     updateHtmlLang();
 });
