@@ -1,4 +1,15 @@
-let jrscToken = localStorage.getItem('jrscToken');
+let jrscToken;
+
+// Initialize and handle storage
+chrome.storage.sync.get(['jrscToken', 'openNum'], function(result) {
+    jrscToken = result.jrscToken;
+    let currentOpenNum = result.openNum || 0;
+    
+    // Update open count
+    chrome.storage.sync.set({
+        'openNum': currentOpenNum + 1
+    });
+});
 
 const output = (quoteText, titleText, authorText, vendorName, vendorUrl) => {
     // Get localized strings by chrome.i18n
@@ -13,10 +24,12 @@ const output = (quoteText, titleText, authorText, vendorName, vendorUrl) => {
     } else {
         document.querySelector('.vendor-text').innerText = vendorName;
     }
-    document.querySelector('.openNum').innerText = localStorage.getItem('openNum');
+    
+    // Get open count from sync storage
+    chrome.storage.sync.get(['openNum'], function(result) {
+        document.querySelector('.openNum').innerText = result.openNum || 0;
+    });
 }
-
-localStorage.getItem('openNum') == null ? localStorage.setItem('openNum', 1) : localStorage.setItem('openNum', parseInt(localStorage.getItem('openNum')) + 1);
 
 // 无网/无法获取 local
 const local = (isOffline) => {
@@ -58,7 +71,18 @@ const jrsc = () => {
                 local(isOffline = true);
                 console.error('Request failed. Network error.');
             }, t.onreadystatechange = function (n) { if (4 === t.readyState) { var o = JSON.parse(t.responseText); "success" === o.status ? e(o) : console.error("今日诗词API加载失败，错误原因：" + o.errMessage) } }
-        } t.load = function (n) { return e.localStorage && e.localStorage.getItem(o) ? function (e, n) { return r(e, "https://v2.jinrishici.com/one.json?client=browser-sdk/1.2&X-User-Token=" + encodeURIComponent(n)) }(n, e.localStorage.getItem(o)) : function (n) { return r(function (t) { e.localStorage.setItem(o, t.token), n(t) }, "https://v2.jinrishici.com/one.json?client=browser-sdk/1.2") }(n) }, e.jinrishici = t, i() ? c() : (n = function () { i() && c() }, "loading" != document.readyState ? n() : document.addEventListener ? document.addEventListener("DOMContentLoaded", n) : document.attachEvent("onreadystatechange", function () { "complete" == document.readyState && n() }))
+        } t.load = function (n) { 
+            return chrome.storage.sync.get(['jrscToken'], function(result) {
+                if (result.jrscToken) {
+                    return r(n, "https://v2.jinrishici.com/one.json?client=browser-sdk/1.2&X-User-Token=" + encodeURIComponent(result.jrscToken));
+                } else {
+                    return r(function (t) {
+                        chrome.storage.sync.set({jrscToken: t.token});
+                        n(t);
+                    }, "https://v2.jinrishici.com/one.json?client=browser-sdk/1.2");
+                }
+            });
+        }, e.jinrishici = t, i() ? c() : (n = function () { i() && c() }, "loading" != document.readyState ? n() : document.addEventListener ? document.addEventListener("DOMContentLoaded", n) : document.attachEvent("onreadystatechange", function () { "complete" == document.readyState && n() }))
     }(window);
 
     jinrishici.load(function (result) {
