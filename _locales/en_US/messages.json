@@ -39,13 +39,8 @@
     },
     "saveButton": {
         "message": "Save"
-    },    "saveSuccessMessage": {
+    },
+    "saveSuccessMessage": {
         "message": "Settings saved"
-    },
-    "aboutHeading": {
-        "message": "About"
-    },
-    "aboutContent": {
-        "message": "Another New Tab extension providing poems and quotes from multiple data sources."
     }
 }
