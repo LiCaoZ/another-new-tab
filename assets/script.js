@@ -1,4 +1,4 @@
-// Update HTML lang attribute based on current locale
+// Update HTML lang attribute and page title based on current locale
 function updateHtmlLang() {
     // Get current locale from Chrome or default to en-US
     const locale = chrome.i18n.getUILanguage();
@@ -13,13 +13,16 @@ function updateHtmlLang() {
     
     // Set the HTML lang attribute
     document.documentElement.setAttribute('lang', lang);
+    
+    // Set the page title to the localized extension name
+    document.title = chrome.i18n.getMessage('extensionName');
 }
 
 let jrscToken;
 
 // Initialize and handle storage
 chrome.storage.sync.get(['jrscToken', 'openNum'], function(result) {
-    // Update HTML lang attribute
+    // Update HTML lang attribute and page title
     updateHtmlLang();
     
     jrscToken = result.jrscToken;
@@ -156,4 +159,9 @@ chrome.storage.sync.get(['dataSource'], function (result) {
             local();
         }
     }
+});
+
+// Ensure title is set when DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    updateHtmlLang();
 });
