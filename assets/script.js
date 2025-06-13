@@ -22,26 +22,6 @@ localStorage.getItem('openNum') == null ? localStorage.setItem('openNum', 1) : l
 const local = (isOffline) => {
     let localQuotes = [
         {
-            text: '原神是检验原神的唯一标准。',
-            author: '中国科学技术大学第十届信息安全大赛选手群'
-        },
-        {
-            text: '「原神」是世界上坠吼的游戏。',
-            author: 'LCZ'
-        },
-        {
-            text: '不玩原神的话，你将会度过相对失败的一生。',
-            author: 'LCZ'
-        },
-        {
-            text: '加入原神大学，共创辉煌人生！',
-            author: 'ShanMao'
-        },
-        {
-            text: '鱼与熊掌不可兼得，除非加钱（x',
-            author: '中国的小赵'
-        },
-        {
             text: '无论最终结果将人类文明导向何处，我们，选择希望。',
             author: '电影《流浪地球》'
         },
@@ -52,18 +32,6 @@ const local = (isOffline) => {
         {
             text: '今人不见古时月，今月曾经照古人。',
             author: '李白《把酒问月》'
-        },
-        {
-            text: '我们未曾拥有繁星，我们只是星图的谱写者。',
-            author: 'Eric Zhao'
-        },
-        {
-            text: '不管几岁，快乐万岁！',
-            author: 'Eric Zhao'
-        },
-        {
-            text: '别赶路，去感受路。',
-            author: '中国的小赵'
         },
         {
             text: '无穷的远方，无数的人们，都和我有关。',
