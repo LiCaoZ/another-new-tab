@@ -1,7 +1,27 @@
+// Update HTML lang attribute based on current locale
+function updateHtmlLang() {
+    // Get current locale from Chrome or default to en-US
+    const locale = chrome.i18n.getUILanguage();
+    let lang = 'en';
+    
+    // Map Chrome locale format to HTML lang attribute format
+    if (locale.startsWith('zh')) {
+        lang = 'zh';
+    } else if (locale.startsWith('en')) {
+        lang = 'en';
+    }
+    
+    // Set the HTML lang attribute
+    document.documentElement.setAttribute('lang', lang);
+}
+
 let jrscToken;
 
 // Initialize and handle storage
 chrome.storage.sync.get(['jrscToken', 'openNum'], function(result) {
+    // Update HTML lang attribute
+    updateHtmlLang();
+    
     jrscToken = result.jrscToken;
     let currentOpenNum = result.openNum || 0;
     
@@ -109,17 +129,31 @@ const hitokoto = () => {
     }
 }
 
-// Roll a provider to trigger
-const providers = ['jrsc', 'hitokoto', 'local'];
-let option = Math.floor(Math.random() * providers.length);
-// trigger
-if (option == 0) {
-    jrsc();
-} else if (option == 1) {
-    hitokoto();
-} else {
-    // wait for dom ready
-    document.addEventListener('DOMContentLoaded', function () {
-        local();
-    });
-}
+// Get provider from settings or use random as default
+chrome.storage.sync.get(['dataSource'], function (result) {
+    // Define available providers
+    const providers = ['jrsc', 'hitokoto', 'local', 'random'];
+    let selectedSource = result.dataSource || 'random';
+    
+    // If random is selected, pick one randomly
+    if (selectedSource === 'random') {
+        const randomProviders = ['jrsc', 'hitokoto', 'local'];
+        selectedSource = randomProviders[Math.floor(Math.random() * randomProviders.length)];
+    }
+    
+    // Trigger the selected provider
+    if (selectedSource === 'jrsc') {
+        jrsc();
+    } else if (selectedSource === 'hitokoto') {
+        hitokoto();
+    } else if (selectedSource === 'local') {
+        // Wait for DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function () {
+                local();
+            });
+        } else {
+            local();
+        }
+    }
+});

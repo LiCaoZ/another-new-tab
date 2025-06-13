@@ -21,5 +21,25 @@
     },
     "localDataSetName": {
         "message": "本地数据集"
+    },
+    "randomName": {
+        "message": "随机"
+    },
+    "optionsTitle": {
+        "message": "设置"
+    },
+    "contentControlTitle": {
+        "message": "内容控制"
+    },
+    "dataSourceLabel": {
+        "message": "数据源"
+    },
+    "dataSourceDescription": {
+        "message": "选择您希望在新标签页上显示的内容来源"
+    },
+    "saveButton": {
+        "message": "保存"
+    },    "saveSuccessMessage": {
+        "message": "设置已保存"
     }
 }

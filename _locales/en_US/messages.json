@@ -14,12 +14,38 @@
         "message": "Meet you the <span class='openNum'></span> time."
     },
     "JrscName": {
-        "message": "Jinrishici"
+        "message": "Jinrishici (今日诗词)"
     },
     "HitokotoName": {
         "message": "Hitokoto"
     },
     "localDataSetName": {
         "message": "Local Data Set"
+    },
+    "randomName": {
+        "message": "Random"
+    },
+    "optionsTitle": {
+        "message": "Settings"
+    },
+    "contentControlTitle": {
+        "message": "Content Control"
+    },
+    "dataSourceLabel": {
+        "message": "Data Source"
+    },
+    "dataSourceDescription": {
+        "message": "Choose the content source you want to display on the new tab page"
+    },
+    "saveButton": {
+        "message": "Save"
+    },    "saveSuccessMessage": {
+        "message": "Settings saved"
+    },
+    "aboutHeading": {
+        "message": "About"
+    },
+    "aboutContent": {
+        "message": "Another New Tab extension providing poems and quotes from multiple data sources."
     }
 }

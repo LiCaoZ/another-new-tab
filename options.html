@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Options - Another New Tab</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="module" src="assets/@fluentui/web-components@2.6.1/web-components.min.js"></script>
+    <style>
+        :root {
+            --body-font: "Segoe UI", Tahoma, Geneva, Verdana, "Microsoft YaHei UI", sans-serif;
+            --neutral-foreground-rest: #242424;
+            --neutral-fill-layer-rest: #f5f5f5;
+        }
+
+        body {
+            font-family: var(--body-font);
+            margin: 0;
+            padding: 20px;
+            background-color: var(--neutral-fill-layer-rest);
+            color: var(--neutral-foreground-rest);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section {
+            margin-bottom: 16px;
+            padding: 20px;
+            background-color: var(--neutral-fill-layer-rest);
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-row {
+            margin-bottom: 16px;
+        }
+
+        .section h2 {
+            margin-top: 0;
+        }
+
+        .description {
+            font-size: 14px;
+            margin-bottom: 16px;
+            color: #666;
+        }
+
+        .label-wrapper {
+            margin-bottom: 8px;
+        }
+
+        fluent-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .page-title {
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: normal;
+        }
+
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .toast {
+            background-color: #107c10;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 4px;
+            margin-top: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .toast.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        fluent-select {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .title-field {
+            width: 100%;
+            margin-bottom: 4px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --neutral-foreground-rest: #ffffff;
+                --neutral-fill-layer-rest: #1e1e1e;
+            }
+
+            .description {
+                color: #cccccc;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="page-title" id="options-title"></h1>
+        <div class="section">
+            <h2 id="content-control-title"></h2>
+            <p class="description" id="data-source-description"></p>
+
+            <div class="form-row">
+                <div class="label-wrapper">
+                    <fluent-label for="data-source-selector" id="data-source-label"></fluent-label>
+                </div>
+                <fluent-select id="data-source-selector" appearance="outline">
+                    <fluent-option value="jrsc">Jinrishici</fluent-option>
+                    <fluent-option value="hitokoto">Hitokoto</fluent-option>
+                    <fluent-option value="local">Local</fluent-option>
+                    <fluent-option value="random">Random</fluent-option>
+                </fluent-select>
+            </div>
+            <div class="actions">
+                <fluent-button appearance="accent" id="save-button"></fluent-button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="options.js"></script>
+</body>
+
+</html>
