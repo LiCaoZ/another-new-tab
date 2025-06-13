@@ -42,5 +42,26 @@
     },
     "saveSuccessMessage": {
         "message": "Settings saved"
+    },
+    "dataManagementTitle": {
+        "message": "Data Management"
+    },
+    "refreshJinrishiciTokenLabel": {
+        "message": "Refresh Jinrishici Token"
+    },
+    "refreshJinrishiciTokenDescription": {
+        "message": "Reset your recommendation profile on the Jinrishici service"
+    },
+    "resetVisitCountLabel": {
+        "message": "Reset Visit Counter"
+    },
+    "resetVisitCountDescription": {
+        "message": "Set the number of times you've visited the new tab page back to zero"
+    },
+    "refreshSuccessMessage": {
+        "message": "Token refreshed successfully"
+    },
+    "resetSuccessMessage": {
+        "message": "Visit count has been reset"
     }
 }

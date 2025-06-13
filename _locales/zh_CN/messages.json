@@ -41,5 +41,26 @@
         "message": "保存"
     },    "saveSuccessMessage": {
         "message": "设置已保存"
+    },
+    "dataManagementTitle": {
+        "message": "数据管理"
+    },
+    "refreshJinrishiciTokenLabel": {
+        "message": "刷新今日诗词 Token"
+    },
+    "refreshJinrishiciTokenDescription": {
+        "message": "重置您在今日诗词服务端的推荐画像"
+    },
+    "resetVisitCountLabel": {
+        "message": "重置访问计数器"
+    },
+    "resetVisitCountDescription": {
+        "message": "将新标签页访问次数重置为零"
+    },
+    "refreshSuccessMessage": {
+        "message": "Token 已成功刷新"
+    },
+    "resetSuccessMessage": {
+        "message": "访问计数已重置"
     }
 }
