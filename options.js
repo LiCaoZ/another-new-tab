@@ -11,11 +11,12 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('save-button').textContent = chrome.i18n.getMessage('saveButton');
     
     // Initialize data management section
-    document.getElementById('data-management-title').textContent = chrome.i18n.getMessage('dataManagementTitle');
-    document.getElementById('refresh-token-label').textContent = chrome.i18n.getMessage('refreshJinrishiciTokenLabel');
+    document.getElementById('data-management-title').textContent = chrome.i18n.getMessage('dataManagementTitle');    document.getElementById('refresh-token-label').textContent = chrome.i18n.getMessage('refreshJinrishiciTokenLabel');
     document.getElementById('refresh-token-description').textContent = chrome.i18n.getMessage('refreshJinrishiciTokenDescription');
     document.getElementById('reset-visit-count-label').textContent = chrome.i18n.getMessage('resetVisitCountLabel');
     document.getElementById('reset-visit-count-description').textContent = chrome.i18n.getMessage('resetVisitCountDescription');
+    document.getElementById('refresh-token-button').textContent = chrome.i18n.getMessage('refreshButton');
+    document.getElementById('reset-visit-count-button').textContent = chrome.i18n.getMessage('resetButton');
     // Set option values with translated text
     document.querySelectorAll('fluent-option').forEach(option => {
         if (option.value === 'jrsc') {

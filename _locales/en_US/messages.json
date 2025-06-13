@@ -63,5 +63,14 @@
     },
     "resetSuccessMessage": {
         "message": "Visit count has been reset"
+    },
+    "refreshButton": {
+        "message": "Refresh"
+    },
+    "resetButton": {
+        "message": "Reset"
+    },
+    "firstViewMessage": {
+        "message": "Nice to meet you!"
     }
 }

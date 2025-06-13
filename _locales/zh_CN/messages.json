@@ -39,7 +39,8 @@
     },
     "saveButton": {
         "message": "保存"
-    },    "saveSuccessMessage": {
+    },
+    "saveSuccessMessage": {
         "message": "设置已保存"
     },
     "dataManagementTitle": {
@@ -62,5 +63,14 @@
     },
     "resetSuccessMessage": {
         "message": "访问计数已重置"
+    },
+    "refreshButton": {
+        "message": "刷新"
+    },
+    "resetButton": {
+        "message": "重置"
+    },
+    "firstViewMessage": {
+        "message": "初来乍到，请多关照。"
     }
 }
