@@ -56,30 +56,33 @@ const output = (quoteText, titleText, authorText, vendorName, vendorUrl) => {
 
 // 无网/无法获取 local
 const local = (isOffline) => {
-    let localQuotes = [
-        {
-            text: '无论最终结果将人类文明导向何处，我们，选择希望。',
-            author: '电影《流浪地球》'
-        },
-        {
-            text: '没有人的文明，毫无意义。',
-            author: '电影《流浪地球》'
-        },
-        {
-            text: '今人不见古时月，今月曾经照古人。',
-            author: '李白《把酒问月》'
-        },
-        {
-            text: '无穷的远方，无数的人们，都和我有关。',
-            author: '鲁迅《且介亭杂文末集·这也是生活》'
-        }
-    ];
-    let randomSeed = Math.floor(Math.random() * localQuotes.length);
-    if (isOffline) {
-        output(localQuotes[randomSeed]['text'], '无法获取在线内容，请检查网络连接状态与控制台报错', '—— ' + localQuotes[randomSeed]['author'], 'localDataSetName', 'local');
-    } else {
-        output(localQuotes[randomSeed]['text'], '', '—— ' + localQuotes[randomSeed]['author'], 'localDataSetName', 'local');
-    }
+    // 从 JSON 文件加载本地引用数据
+    fetch('assets/local-quotes.json')
+        .then(response => response.json())
+        .then(localQuotes => {
+            let randomSeed = Math.floor(Math.random() * localQuotes.length);
+            if (isOffline) {
+                output(localQuotes[randomSeed]['text'], '无法获取在线内容，请检查网络连接状态与控制台报错', '—— ' + localQuotes[randomSeed]['author'], 'localDataSetName', 'local');
+            } else {
+                output(localQuotes[randomSeed]['text'], '', '—— ' + localQuotes[randomSeed]['author'], 'localDataSetName', 'local');
+            }
+        })
+        .catch(error => {
+            console.error('无法加载本地引用数据:', error);
+            // 如果无法加载 JSON 文件，使用内置的备用数据
+            const fallbackQuotes = [
+                {
+                    text: '无论最终结果将人类文明导向何处，我们，选择希望。',
+                    author: '电影《流浪地球》'
+                }
+            ];
+            let quote = fallbackQuotes[0];
+            if (isOffline) {
+                output(quote.text, '无法获取在线内容，请检查网络连接状态与控制台报错', '—— ' + quote.author, 'localDataSetName', 'local');
+            } else {
+                output(quote.text, '', '—— ' + quote.author, 'localDataSetName', 'local');
+            }
+        });
 }
 
 // 抽象出今日诗词逻辑
