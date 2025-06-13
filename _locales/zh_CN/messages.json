@@ -72,5 +72,11 @@
     },
     "firstViewMessage": {
         "message": "初来乍到，请多关照。"
+    },
+    "copyJsonBtnText": {
+        "message": "复制 JSON"
+    },
+    "copyJsonSuccess": {
+        "message": "JSON 已复制到剪贴板"
     }
 }

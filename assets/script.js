@@ -20,6 +20,7 @@ function updateHtmlLang() {
 
 let jrscToken;
 let openNum;
+let currentQuoteData = null; // Store the current quote data for copying
 
 chrome.storage.sync.get(['jrscToken', 'openNum'], function (result) {
     // Update HTML lang attribute and page title
@@ -36,7 +37,7 @@ chrome.storage.sync.get(['jrscToken', 'openNum'], function (result) {
     });
 });
 
-const output = (quoteText, titleText, authorText, vendorName, vendorUrl) => {
+const output = (quoteText, titleText, authorText, vendorName, vendorUrl, jsonData = null) => {
     // Get localized strings by chrome.i18n
     document.querySelector('.data-provider-description').innerText = chrome.i18n.getMessage('dataProviderDescription');
     document.querySelector('.open-num-description').innerHTML = chrome.i18n.getMessage('openNumDescription');
@@ -56,6 +57,15 @@ const output = (quoteText, titleText, authorText, vendorName, vendorUrl) => {
             document.querySelector('.openNum').innerText = result.openNum || 0;
         });
     }
+    
+    // Store the JSON data for copy functionality
+    currentQuoteData = jsonData;
+    
+    // Update copy button text
+    const copyBtn = document.getElementById('copyJsonBtn');
+    if (copyBtn) {
+        copyBtn.innerText = chrome.i18n.getMessage('copyJsonBtnText');
+    }
 }
 
 // 无网/无法获取 local
@@ -65,10 +75,11 @@ const local = (isOffline) => {
         .then(response => response.json())
         .then(localQuotes => {
             let randomSeed = Math.floor(Math.random() * localQuotes.length);
+            const selectedQuote = localQuotes[randomSeed];
             if (isOffline) {
-                output(localQuotes[randomSeed]['text'], '无法获取在线内容，请检查网络连接状态与控制台报错', '—— ' + localQuotes[randomSeed]['author'], 'localDataSetName', 'local');
+                output(selectedQuote['text'], '无法获取在线内容，请检查网络连接状态与控制台报错', '—— ' + selectedQuote['author'], 'localDataSetName', 'local', selectedQuote);
             } else {
-                output(localQuotes[randomSeed]['text'], '', '—— ' + localQuotes[randomSeed]['author'], 'localDataSetName', 'local');
+                output(selectedQuote['text'], '', '—— ' + selectedQuote['author'], 'localDataSetName', 'local', selectedQuote);
             }
         })
         .catch(error => {
@@ -82,9 +93,9 @@ const local = (isOffline) => {
             ];
             let quote = fallbackQuotes[0];
             if (isOffline) {
-                output(quote.text, '无法获取在线内容，请检查网络连接状态与控制台报错', '—— ' + quote.author, 'localDataSetName', 'local');
+                output(quote.text, '无法获取在线内容，请检查网络连接状态与控制台报错', '—— ' + quote.author, 'localDataSetName', 'local', quote);
             } else {
-                output(quote.text, '', '—— ' + quote.author, 'localDataSetName', 'local');
+                output(quote.text, '', '—— ' + quote.author, 'localDataSetName', 'local', quote);
             }
         });
 }
@@ -116,7 +127,7 @@ const jrsc = () => {
     }(window);
 
     jinrishici.load(function (result) {
-        output(result.data.content, '', '—— ' + result.data.origin.author + '《' + result.data.origin.title + '》', 'JrscName', 'https://www.jinrishici.com/')
+        output(result.data.content, '', '—— ' + result.data.origin.author + '《' + result.data.origin.title + '》', 'JrscName', 'https://www.jinrishici.com/', result)
         console.log(result)
     });
 }
@@ -130,8 +141,8 @@ const hitokoto = () => {
             const data = JSON.parse(xhr.responseText);
 
             data.from_who
-                ? output(data.hitokoto, '', '—— ' + data.from_who + ' [' + data.from + ']', 'HitokotoName', 'https://hitokoto.cn/')
-                : output(data.hitokoto, '', '—— ' + data.from, 'HitokotoName', 'https://hitokoto.cn/');
+                ? output(data.hitokoto, '', '—— ' + data.from_who + ' [' + data.from + ']', 'HitokotoName', 'https://hitokoto.cn/', data)
+                : output(data.hitokoto, '', '—— ' + data.from, 'HitokotoName', 'https://hitokoto.cn/', data);
 
             console.log(data)
         }
@@ -175,4 +186,28 @@ chrome.storage.sync.get(['dataSource'], function (result) {
 // Ensure title is set when DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function () {
     updateHtmlLang();
+    
+    // Add event listener for copy JSON button
+    const copyJsonBtn = document.getElementById('copyJsonBtn');
+    if (copyJsonBtn) {
+        copyJsonBtn.addEventListener('click', function() {
+            if (currentQuoteData) {
+                // Copy the JSON data to clipboard
+                navigator.clipboard.writeText(JSON.stringify(currentQuoteData, null, 2))
+                    .then(() => {
+                        // Show success feedback
+                        const originalText = copyJsonBtn.innerText;
+                        copyJsonBtn.innerText = chrome.i18n.getMessage('copyJsonSuccess');
+                        
+                        // Reset button text after 2 seconds
+                        setTimeout(() => {
+                            copyJsonBtn.innerText = originalText;
+                        }, 2000);
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy JSON: ', err);
+                    });
+            }
+        });
+    }
 });

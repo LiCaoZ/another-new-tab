@@ -72,5 +72,11 @@
     },
     "firstViewMessage": {
         "message": "Nice to meet you!"
+    },
+    "copyJsonBtnText": {
+        "message": "Copy JSON"
+    },
+    "copyJsonSuccess": {
+        "message": "JSON copied to clipboard"
     }
 }
